@@ -13,7 +13,7 @@ from utils.data_helper import DataListLoader, DataLoader
 from collections import Counter
 import random
 
-def Torchloader(config, split="train", shuffle=False, parallel=False, master_node=False, edge_module=False, sort_by_number=None, random_init=True, meta_copy=1):
+def Torchloader(config, split="train", shuffle=False, parallel=False, master_node=False, edge_module=False, sort_by_number=None, random_init=True, meta_copy=1, one_module=False):
     tik = time.time()
     npr = np.random.RandomState(seed=config.seed)
     data_list = []
@@ -48,7 +48,11 @@ def Torchloader(config, split="train", shuffle=False, parallel=False, master_nod
             b = torch.tensor(graph_data['b']).float()
 
             if random_init:
-                node_idx_inv = [random.choice([0, 1]) for ii in range(num_nodes_I)]
+                if not one_module:
+                    node_idx_inv = [random.choice([0, 1]) for ii in range(num_nodes_I)]
+                else:
+                    node_idx_inv = [0 for ii in range(num_nodes_I)]
+
                 node_idx = [[], []]
                 for idx, ii in enumerate(node_idx_inv):
                     node_idx[ii].append(idx)
@@ -66,7 +70,10 @@ def Torchloader(config, split="train", shuffle=False, parallel=False, master_nod
                     if deg[1] < 50:
                         node_idx_inv.append(0)
                     else:
-                        node_idx_inv.append(1)
+                        if one_module:
+                            node_idx_inv.append(0)
+                        else:
+                            node_idx_inv.append(1)
                 node_idx = [[], []]
                 for idx, ii in enumerate(node_idx_inv):
                     node_idx[ii].append(idx)
@@ -261,7 +268,10 @@ def Torchloader(config, split="train", shuffle=False, parallel=False, master_nod
                     node_idx[ii].append(idx)
 
                 if random_init:
-                    node_idx_inv = [random.choice([0, 1]) for ii in range(num_nodes_I)]
+                    if not one_module:
+                        node_idx_inv = [random.choice([0, 1]) for ii in range(num_nodes_I)]
+                    else:
+                        node_idx_inv = [0 for ii in range(num_nodes_I)]
                     node_idx = [[], []]
                     for idx, ii in enumerate(node_idx_inv):
                         node_idx[ii].append(idx)
@@ -279,7 +289,10 @@ def Torchloader(config, split="train", shuffle=False, parallel=False, master_nod
                         if deg[1] < 50:
                             node_idx_inv.append(0)
                         else:
-                            node_idx_inv.append(1)
+                            if one_module:
+                                node_idx_inv.append(0)
+                            else:
+                                node_idx_inv.append(1)
                     node_idx = [[], []]
                     for idx, ii in enumerate(node_idx_inv):
                         node_idx[ii].append(idx)
@@ -452,7 +465,10 @@ def Torchloader(config, split="train", shuffle=False, parallel=False, master_nod
                     node_idx[ii].append(idx)
 
                 if random_init:
-                    node_idx_inv = [random.choice([0, 1]) for ii in range(num_nodes_I)]
+                    if not one_module:
+                        node_idx_inv = [random.choice([0, 1]) for ii in range(num_nodes_I)]
+                    else:
+                        node_idx_inv = [0 for ii in range(num_nodes_I)]
                     node_idx = [[], []]
                     for idx, ii in enumerate(node_idx_inv):
                         node_idx[ii].append(idx)
@@ -470,7 +486,10 @@ def Torchloader(config, split="train", shuffle=False, parallel=False, master_nod
                         if deg[1] < 50:
                             node_idx_inv.append(0)
                         else:
-                            node_idx_inv.append(1)
+                            if one_module:
+                                node_idx_inv.append(0)
+                            else:
+                                node_idx_inv.append(1)
                     node_idx = [[], []]
                     for idx, ii in enumerate(node_idx_inv):
                         node_idx[ii].append(idx)
@@ -646,7 +665,10 @@ def Torchloader(config, split="train", shuffle=False, parallel=False, master_nod
                     node_idx[ii].append(idx)
 
                 if random_init:
-                    node_idx_inv = [random.choice([0, 1]) for ii in range(num_nodes_I)]
+                    if not one_module:
+                        node_idx_inv = [random.choice([0, 1]) for ii in range(num_nodes_I)]
+                    else:
+                        node_idx_inv = [0 for ii in range(num_nodes_I)]
                     node_idx = [[], []]
                     for idx, ii in enumerate(node_idx_inv):
                         node_idx[ii].append(idx)
@@ -664,7 +686,10 @@ def Torchloader(config, split="train", shuffle=False, parallel=False, master_nod
                         if deg[1] < 50:
                             node_idx_inv.append(0)
                         else:
-                            node_idx_inv.append(1)
+                            if one_module:
+                                node_idx_inv.append(0)
+                            else:
+                                node_idx_inv.append(1)
                     node_idx = [[], []]
                     for idx, ii in enumerate(node_idx_inv):
                         node_idx[ii].append(idx)

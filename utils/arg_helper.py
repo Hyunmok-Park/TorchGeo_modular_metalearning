@@ -47,7 +47,7 @@ def get_config(config_file, sample_id, exp_dir=None):
           config.model.name, sample_id, config.dataset.name, config.dataset.data_path.split('/')[-1],
           time.strftime('%Y-%b-%d-%H-%M-%S'), str(config.dataset.split), str(config.model.hidden_dim), str(config.model.num_prop),
           config.model.aggregate_type, "JK" if config.model.jumping else "", "SK" if config.model.skip_connection else "", "IP" if config.model.interpol else "", "MN_2" if config.model.master_node else "","MASK_{}".format(config.model.masking_number) if config.model.masking else "",
-          "PRETEXT" if config.model.train_pretext else ""
+          "PRETEXT" if config.model.train_pretext else "", str(config.train.init_temp), str(config.train.batch_size), str(config.train.meta_copy), "NO_MIN_TEMP", "NO_CH_NODE" if not config.train.ch_node else "CH_NODE", "ONE_MOD" if config.train.one_module else "TWO_MOD", "RANDOM" if config.train.random_init else "BIAS"
       ])
   if exp_dir is not None:
     config.exp_dir = exp_dir
